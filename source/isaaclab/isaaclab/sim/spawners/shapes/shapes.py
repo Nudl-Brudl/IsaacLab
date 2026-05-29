@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -9,8 +9,9 @@ from typing import TYPE_CHECKING
 
 from pxr import Usd
 
+import isaaclab.sim.utils.prims as prim_utils
 from isaaclab.sim import schemas
-from isaaclab.sim.utils import bind_physics_material, bind_visual_material, clone, create_prim, get_current_stage
+from isaaclab.sim.utils import bind_physics_material, bind_visual_material, clone
 
 if TYPE_CHECKING:
     from . import shapes_cfg
@@ -49,13 +50,11 @@ def spawn_sphere(
     Raises:
         ValueError: If a prim already exists at the given path.
     """
-    # obtain stage handle
-    stage = get_current_stage()
     # spawn sphere if it doesn't exist.
     attributes = {"radius": cfg.radius}
-    _spawn_geom_from_prim_type(prim_path, cfg, "Sphere", attributes, translation, orientation, stage=stage)
+    _spawn_geom_from_prim_type(prim_path, cfg, "Sphere", attributes, translation, orientation)
     # return the prim
-    return stage.GetPrimAtPath(prim_path)
+    return prim_utils.get_prim_at_path(prim_path)
 
 
 @clone
@@ -95,16 +94,14 @@ def spawn_cuboid(
     Raises:
         If a prim already exists at the given path.
     """
-    # obtain stage handle
-    stage = get_current_stage()
     # resolve the scale
     size = min(cfg.size)
     scale = [dim / size for dim in cfg.size]
     # spawn cuboid if it doesn't exist.
     attributes = {"size": size}
-    _spawn_geom_from_prim_type(prim_path, cfg, "Cube", attributes, translation, orientation, scale, stage=stage)
+    _spawn_geom_from_prim_type(prim_path, cfg, "Cube", attributes, translation, orientation, scale)
     # return the prim
-    return stage.GetPrimAtPath(prim_path)
+    return prim_utils.get_prim_at_path(prim_path)
 
 
 @clone
@@ -140,13 +137,11 @@ def spawn_cylinder(
     Raises:
         ValueError: If a prim already exists at the given path.
     """
-    # obtain stage handle
-    stage = get_current_stage()
     # spawn cylinder if it doesn't exist.
     attributes = {"radius": cfg.radius, "height": cfg.height, "axis": cfg.axis.upper()}
-    _spawn_geom_from_prim_type(prim_path, cfg, "Cylinder", attributes, translation, orientation, stage=stage)
+    _spawn_geom_from_prim_type(prim_path, cfg, "Cylinder", attributes, translation, orientation)
     # return the prim
-    return stage.GetPrimAtPath(prim_path)
+    return prim_utils.get_prim_at_path(prim_path)
 
 
 @clone
@@ -182,13 +177,11 @@ def spawn_capsule(
     Raises:
         ValueError: If a prim already exists at the given path.
     """
-    # obtain stage handle
-    stage = get_current_stage()
     # spawn capsule if it doesn't exist.
     attributes = {"radius": cfg.radius, "height": cfg.height, "axis": cfg.axis.upper()}
-    _spawn_geom_from_prim_type(prim_path, cfg, "Capsule", attributes, translation, orientation, stage=stage)
+    _spawn_geom_from_prim_type(prim_path, cfg, "Capsule", attributes, translation, orientation)
     # return the prim
-    return stage.GetPrimAtPath(prim_path)
+    return prim_utils.get_prim_at_path(prim_path)
 
 
 @clone
@@ -224,13 +217,11 @@ def spawn_cone(
     Raises:
         ValueError: If a prim already exists at the given path.
     """
-    # obtain stage handle
-    stage = get_current_stage()
     # spawn cone if it doesn't exist.
     attributes = {"radius": cfg.radius, "height": cfg.height, "axis": cfg.axis.upper()}
-    _spawn_geom_from_prim_type(prim_path, cfg, "Cone", attributes, translation, orientation, stage=stage)
+    _spawn_geom_from_prim_type(prim_path, cfg, "Cone", attributes, translation, orientation)
     # return the prim
-    return stage.GetPrimAtPath(prim_path)
+    return prim_utils.get_prim_at_path(prim_path)
 
 
 """
@@ -246,7 +237,6 @@ def _spawn_geom_from_prim_type(
     translation: tuple[float, float, float] | None = None,
     orientation: tuple[float, float, float, float] | None = None,
     scale: tuple[float, float, float] | None = None,
-    stage: Usd.Stage | None = None,
 ):
     """Create a USDGeom-based prim with the given attributes.
 
@@ -272,17 +262,13 @@ def _spawn_geom_from_prim_type(
         orientation: The orientation in (w, x, y, z) to apply to the prim w.r.t. its parent prim. Defaults to None,
             in which case this is set to identity.
         scale: The scale to apply to the prim. Defaults to None, in which case this is set to identity.
-        stage: The stage to spawn the asset at. Defaults to None, in which case the current stage is used.
 
     Raises:
         ValueError: If a prim already exists at the given path.
     """
-    # obtain stage handle
-    stage = stage if stage is not None else get_current_stage()
-
     # spawn geometry if it doesn't exist.
-    if not stage.GetPrimAtPath(prim_path).IsValid():
-        create_prim(prim_path, prim_type="Xform", translation=translation, orientation=orientation, stage=stage)
+    if not prim_utils.is_prim_path_valid(prim_path):
+        prim_utils.create_prim(prim_path, prim_type="Xform", translation=translation, orientation=orientation)
     else:
         raise ValueError(f"A prim already exists at path: '{prim_path}'.")
 
@@ -291,10 +277,10 @@ def _spawn_geom_from_prim_type(
     mesh_prim_path = geom_prim_path + "/mesh"
 
     # create the geometry prim
-    create_prim(mesh_prim_path, prim_type, scale=scale, attributes=attributes, stage=stage)
+    prim_utils.create_prim(mesh_prim_path, prim_type, scale=scale, attributes=attributes)
     # apply collision properties
     if cfg.collision_props is not None:
-        schemas.define_collision_properties(mesh_prim_path, cfg.collision_props, stage=stage)
+        schemas.define_collision_properties(mesh_prim_path, cfg.collision_props)
     # apply visual material
     if cfg.visual_material is not None:
         if not cfg.visual_material_path.startswith("/"):
@@ -304,7 +290,7 @@ def _spawn_geom_from_prim_type(
         # create material
         cfg.visual_material.func(material_path, cfg.visual_material)
         # apply material
-        bind_visual_material(mesh_prim_path, material_path, stage=stage)
+        bind_visual_material(mesh_prim_path, material_path)
     # apply physics material
     if cfg.physics_material is not None:
         if not cfg.physics_material_path.startswith("/"):
@@ -314,12 +300,12 @@ def _spawn_geom_from_prim_type(
         # create material
         cfg.physics_material.func(material_path, cfg.physics_material)
         # apply material
-        bind_physics_material(mesh_prim_path, material_path, stage=stage)
+        bind_physics_material(mesh_prim_path, material_path)
 
     # note: we apply rigid properties in the end to later make the instanceable prim
     # apply mass properties
     if cfg.mass_props is not None:
-        schemas.define_mass_properties(prim_path, cfg.mass_props, stage=stage)
+        schemas.define_mass_properties(prim_path, cfg.mass_props)
     # apply rigid body properties
     if cfg.rigid_props is not None:
-        schemas.define_rigid_body_properties(prim_path, cfg.rigid_props, stage=stage)
+        schemas.define_rigid_body_properties(prim_path, cfg.rigid_props)

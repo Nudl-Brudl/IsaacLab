@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -67,7 +67,8 @@ simulation_app = app_launcher.app
 from isaacsim.core.api.simulation_context import SimulationContext
 from isaacsim.core.cloner import GridCloner
 
-import isaaclab.sim as sim_utils
+import isaaclab.sim.utils.prims as prim_utils
+from isaaclab.sim.utils.stage import get_current_stage
 from isaaclab.utils import Timer
 from isaaclab.utils.assets import check_file_path
 
@@ -83,7 +84,7 @@ def main():
     )
 
     # get stage handle
-    stage = sim_utils.get_current_stage()
+    stage = get_current_stage()
 
     # enable fabric which avoids passing data over to USD structure
     # this speeds up the read-write operation of GPU buffers
@@ -99,12 +100,12 @@ def main():
     # Create interface to clone the scene
     cloner = GridCloner(spacing=args_cli.spacing, stage=stage)
     cloner.define_base_env("/World/envs")
-    stage.DefinePrim("/World/envs/env_0", "Xform")
+    prim_utils.define_prim("/World/envs/env_0")
     # Spawn things into stage
-    sim_utils.create_prim("/World/Light", "DistantLight")
+    prim_utils.create_prim("/World/Light", "DistantLight")
 
     # Everything under the namespace "/World/envs/env_0" will be cloned
-    sim_utils.create_prim("/World/envs/env_0/Asset", "Xform", usd_path=os.path.abspath(args_cli.input))
+    prim_utils.create_prim("/World/envs/env_0/Asset", "Xform", usd_path=os.path.abspath(args_cli.input))
     # Clone the scene
     num_clones = args_cli.num_clones
 

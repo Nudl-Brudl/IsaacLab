@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2024-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -98,8 +98,7 @@ class RmpFlowGalbotLeftArmGripperCubeStackAbsMimicEnvCfg(RmpFlowGalbotLeftArmCub
                 subtask_term_offset_range=(
                     25,
                     30,
-                ),  # This should be larger than the other subtasks, because the gripper
-                # should be lifted higher than two blocks
+                ),  # this should be larger than the other subtasks, because the gripper should be lifted higher than 2 blocks
                 # Selection strategy for source subtask segment
                 selection_strategy="nearest_neighbor_object",
                 # Optional parameters for the selection strategy function

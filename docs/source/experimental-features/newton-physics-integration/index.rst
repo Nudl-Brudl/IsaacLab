@@ -38,9 +38,8 @@ until the framework has reached an official release. We appreciate your understa
   :titlesonly:
 
   installation
-  isaaclab_newton-beta-2
   training-environments
-  visualization
+  newton-visualizer
   limitations-and-known-bugs
   solver-transitioning
   sim-to-sim

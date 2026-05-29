@@ -31,16 +31,8 @@
     RayCasterCfg
     RayCasterCamera
     RayCasterCameraCfg
-    MultiMeshRayCaster
-    MultiMeshRayCasterData
-    MultiMeshRayCasterCfg
-    MultiMeshRayCasterCamera
-    MultiMeshRayCasterCameraCfg
     Imu
     ImuCfg
-    VisuoTactileSensor
-    VisuoTactileSensorCfg
-    VisuoTactileSensorData
 
 Sensor Base
 -----------
@@ -159,40 +151,7 @@ Ray-Cast Camera
     :members:
     :inherited-members:
     :show-inheritance:
-    :exclude-members: __init__, class_type, OffsetCfg
-
-Multi-Mesh Ray-Cast Sensor
---------------------------
-
-.. autoclass:: MultiMeshRayCaster
-    :members:
-    :inherited-members:
-    :show-inheritance:
-
-.. autoclass:: MultiMeshRayCasterData
-    :members:
-    :inherited-members:
-    :exclude-members: __init__
-
-.. autoclass:: MultiMeshRayCasterCfg
-    :members:
-    :inherited-members:
-    :show-inheritance:
-    :exclude-members: __init__, class_type, OffsetCfg
-
-Multi-Mesh Ray-Cast Camera
---------------------------
-
-.. autoclass:: MultiMeshRayCasterCamera
-    :members:
-    :inherited-members:
-    :show-inheritance:
-
-.. autoclass:: MultiMeshRayCasterCameraCfg
-    :members:
-    :inherited-members:
-    :show-inheritance:
-    :exclude-members: __init__, class_type, OffsetCfg, RaycastTargetCfg
+    :exclude-members: __init__, class_type
 
 Inertia Measurement Unit
 ------------------------
@@ -203,25 +162,6 @@ Inertia Measurement Unit
     :show-inheritance:
 
 .. autoclass:: ImuCfg
-    :members:
-    :inherited-members:
-    :show-inheritance:
-    :exclude-members: __init__, class_type
-
-Visuo-Tactile Sensor
---------------------
-
-.. autoclass:: VisuoTactileSensor
-    :members:
-    :inherited-members:
-    :show-inheritance:
-
-.. autoclass:: VisuoTactileSensorData
-    :members:
-    :inherited-members:
-    :exclude-members: __init__
-
-.. autoclass:: VisuoTactileSensorCfg
     :members:
     :inherited-members:
     :show-inheritance:

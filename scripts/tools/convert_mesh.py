@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -31,8 +31,7 @@ optional arguments:
   -h, --help                    Show this help message and exit
   --make-instanceable,          Make the asset instanceable for efficient cloning. (default: False)
   --collision-approximation     The method used for approximating collision mesh. Defaults to convexDecomposition.
-                                Set to \"none\" to not add a collision mesh to the converted mesh.
-                                (default: convexDecomposition)
+                                Set to \"none\" to not add a collision mesh to the converted mesh. (default: convexDecomposition)
   --mass                        The mass (in kg) to assign to the converted asset. (default: None)
 
 """
@@ -96,7 +95,7 @@ import os
 import carb
 import omni.kit.app
 
-import isaaclab.sim as sim_utils
+import isaaclab.sim.utils.stage as stage_utils
 from isaaclab.sim.converters import MeshConverter, MeshConverterCfg
 from isaaclab.sim.schemas import schemas_cfg
 from isaaclab.utils.assets import check_file_path
@@ -188,7 +187,7 @@ def main():
     # Simulate scene (if not headless)
     if local_gui or livestream_gui:
         # Open the stage with USD
-        sim_utils.open_stage(mesh_converter.usd_path)
+        stage_utils.open_stage(mesh_converter.usd_path)
         # Reinitialize the simulation
         app = omni.kit.app.get_app_interface()
         # Run simulation

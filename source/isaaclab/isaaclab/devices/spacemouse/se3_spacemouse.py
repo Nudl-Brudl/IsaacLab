@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -7,14 +7,13 @@
 
 from __future__ import annotations
 
-import threading
-import time
-from collections.abc import Callable
-from dataclasses import dataclass
-
 import hid
 import numpy as np
+import threading
+import time
 import torch
+from collections.abc import Callable
+from dataclasses import dataclass
 from scipy.spatial.transform import Rotation
 
 from ..device_base import DeviceBase, DeviceCfg

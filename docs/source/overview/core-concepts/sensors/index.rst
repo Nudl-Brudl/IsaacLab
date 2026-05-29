@@ -19,4 +19,3 @@ The following pages describe the available sensors in more detail:
     frame_transformer
     imu
     ray_caster
-    visuo_tactile_sensor

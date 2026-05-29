@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -8,10 +8,9 @@
 from __future__ import annotations
 
 import logging
+import torch
 from collections.abc import Sequence
 from typing import TYPE_CHECKING
-
-import torch
 
 import isaaclab.utils.math as math_utils
 from isaaclab.assets import Articulation
@@ -21,7 +20,8 @@ from isaaclab.markers import VisualizationMarkers
 if TYPE_CHECKING:
     from isaaclab.envs import ManagerBasedEnv
 
-    from .commands_cfg import NormalVelocityCommandCfg, UniformVelocityCommandCfg
+    from .commands_cfg import (NormalVelocityCommandCfg, 
+                               UniformVelocityCommandCfg)
 
 # import logger
 logger = logging.getLogger(__name__)
@@ -216,6 +216,8 @@ class UniformVelocityCommand(CommandTerm):
         arrow_quat = math_utils.quat_mul(base_quat_w, arrow_quat)
 
         return arrow_scale, arrow_quat
+    
+
 
 
 class NormalVelocityCommand(UniformVelocityCommand):

@@ -1,11 +1,10 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 
 import glob
 import os
-
 import torch
 import torch.nn as nn
 import torchvision
@@ -40,11 +39,9 @@ class FeatureExtractorNetwork(nn.Module):
             nn.Linear(128, 27),
         )
 
-        self.data_transforms = torchvision.transforms.Compose(
-            [
-                torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            ]
-        )
+        self.data_transforms = torchvision.transforms.Compose([
+            torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ])
 
     def forward(self, x):
         x = x.permute(0, 3, 1, 2)
@@ -82,8 +79,7 @@ class FeatureExtractor:
         Args:
             cfg: Configuration for the feature extractor model.
             device: Device to run the model on.
-            log_dir: Directory to save checkpoints. Default is None, which uses the local
-                "logs" folder resolved relative to this file.
+            log_dir: Directory to save checkpoints. If None, uses local "logs" folder resolved with respect to this file.
         """
 
         self.cfg = cfg

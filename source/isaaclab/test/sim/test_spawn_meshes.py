@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -14,23 +14,24 @@ simulation_app = AppLauncher(headless=True).app
 
 
 import pytest
-
 from isaacsim.core.api.simulation_context import SimulationContext
 
 import isaaclab.sim as sim_utils
+import isaaclab.sim.utils.prims as prim_utils
+import isaaclab.sim.utils.stage as stage_utils
 
 
 @pytest.fixture
 def sim():
     """Create a simulation context for testing."""
     # Create a new stage
-    sim_utils.create_new_stage()
+    stage_utils.create_new_stage()
     # Simulation time-step
     dt = 0.1
     # Load kit helper
     sim = SimulationContext(physics_dt=dt, rendering_dt=dt, device="cuda:0")
     # Wait for spawning
-    sim_utils.update_stage()
+    stage_utils.update_stage()
     yield sim
     # Cleanup
     sim.stop()
@@ -49,13 +50,12 @@ def test_spawn_cone(sim):
     # Spawn cone
     cfg = sim_utils.MeshConeCfg(radius=1.0, height=2.0, axis="Y")
     prim = cfg.func("/World/Cone", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cone")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Xform"
     # Check properties
-    prim = sim.stage.GetPrimAtPath("/World/Cone/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cone/geometry/mesh")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Mesh"
 
 
@@ -64,13 +64,12 @@ def test_spawn_capsule(sim):
     # Spawn capsule
     cfg = sim_utils.MeshCapsuleCfg(radius=1.0, height=2.0, axis="Y")
     prim = cfg.func("/World/Capsule", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Capsule").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Capsule")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Xform"
     # Check properties
-    prim = sim.stage.GetPrimAtPath("/World/Capsule/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Capsule/geometry/mesh")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Mesh"
 
 
@@ -79,13 +78,12 @@ def test_spawn_cylinder(sim):
     # Spawn cylinder
     cfg = sim_utils.MeshCylinderCfg(radius=1.0, height=2.0, axis="Y")
     prim = cfg.func("/World/Cylinder", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cylinder").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cylinder")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Xform"
     # Check properties
-    prim = sim.stage.GetPrimAtPath("/World/Cylinder/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cylinder/geometry/mesh")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Mesh"
 
 
@@ -94,13 +92,12 @@ def test_spawn_cuboid(sim):
     # Spawn cuboid
     cfg = sim_utils.MeshCuboidCfg(size=(1.0, 2.0, 3.0))
     prim = cfg.func("/World/Cube", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cube").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cube")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Xform"
     # Check properties
-    prim = sim.stage.GetPrimAtPath("/World/Cube/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cube/geometry/mesh")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Mesh"
 
 
@@ -109,13 +106,12 @@ def test_spawn_sphere(sim):
     # Spawn sphere
     cfg = sim_utils.MeshSphereCfg(radius=1.0)
     prim = cfg.func("/World/Sphere", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Sphere").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Sphere")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Xform"
     # Check properties
-    prim = sim.stage.GetPrimAtPath("/World/Sphere/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Sphere/geometry/mesh")
     assert prim.GetPrimTypeInfo().GetTypeName() == "Mesh"
 
 
@@ -133,14 +129,13 @@ def test_spawn_cone_with_deformable_props(sim):
         deformable_props=sim_utils.DeformableBodyPropertiesCfg(deformable_enabled=True),
     )
     prim = cfg.func("/World/Cone", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cone")
 
     # Check properties
     # Unlike rigid body, deformable body properties are on the mesh prim
-    prim = sim.stage.GetPrimAtPath("/World/Cone/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cone/geometry/mesh")
     assert prim.GetAttribute("physxDeformable:deformableEnabled").Get() == cfg.deformable_props.deformable_enabled
 
 
@@ -154,12 +149,11 @@ def test_spawn_cone_with_deformable_and_mass_props(sim):
         mass_props=sim_utils.MassPropertiesCfg(mass=1.0),
     )
     prim = cfg.func("/World/Cone", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cone")
     # Check properties
-    prim = sim.stage.GetPrimAtPath("/World/Cone/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cone/geometry/mesh")
     assert prim.GetAttribute("physics:mass").Get() == cfg.mass_props.mass
 
     # check sim playing
@@ -184,12 +178,11 @@ def test_spawn_cone_with_deformable_and_density_props(sim):
         mass_props=sim_utils.MassPropertiesCfg(density=10.0),
     )
     prim = cfg.func("/World/Cone", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cone")
     # Check properties
-    prim = sim.stage.GetPrimAtPath("/World/Cone/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cone/geometry/mesh")
     assert prim.GetAttribute("physics:density").Get() == cfg.mass_props.density
     # check sim playing
     sim.play()
@@ -209,14 +202,13 @@ def test_spawn_cone_with_all_deformable_props(sim):
         physics_material=sim_utils.materials.DeformableBodyMaterialCfg(),
     )
     prim = cfg.func("/World/Cone", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone").IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone/geometry/material").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cone")
+    assert prim_utils.is_prim_path_valid("/World/Cone/geometry/material")
     # Check properties
     # -- deformable body
-    prim = sim.stage.GetPrimAtPath("/World/Cone/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cone/geometry/mesh")
     assert prim.GetAttribute("physxDeformable:deformableEnabled").Get() is True
 
     # check sim playing
@@ -240,14 +232,13 @@ def test_spawn_cone_with_all_rigid_props(sim):
         physics_material=sim_utils.materials.RigidBodyMaterialCfg(),
     )
     prim = cfg.func("/World/Cone", cfg)
-
     # Check validity
     assert prim.IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone").IsValid()
-    assert sim.stage.GetPrimAtPath("/World/Cone/geometry/material").IsValid()
+    assert prim_utils.is_prim_path_valid("/World/Cone")
+    assert prim_utils.is_prim_path_valid("/World/Cone/geometry/material")
     # Check properties
     # -- rigid body
-    prim = sim.stage.GetPrimAtPath("/World/Cone")
+    prim = prim_utils.get_prim_at_path("/World/Cone")
     assert prim.GetAttribute("physics:rigidBodyEnabled").Get() == cfg.rigid_props.rigid_body_enabled
     assert (
         prim.GetAttribute("physxRigidBody:solverPositionIterationCount").Get()
@@ -257,7 +248,7 @@ def test_spawn_cone_with_all_rigid_props(sim):
     # -- mass
     assert prim.GetAttribute("physics:mass").Get() == cfg.mass_props.mass
     # -- collision shape
-    prim = sim.stage.GetPrimAtPath("/World/Cone/geometry/mesh")
+    prim = prim_utils.get_prim_at_path("/World/Cone/geometry/mesh")
     assert prim.GetAttribute("physics:collisionEnabled").Get() is True
 
     # check sim playing

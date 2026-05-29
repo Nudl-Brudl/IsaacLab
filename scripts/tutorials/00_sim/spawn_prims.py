@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -32,6 +32,7 @@ simulation_app = app_launcher.app
 """Rest everything follows."""
 
 import isaaclab.sim as sim_utils
+import isaaclab.sim.utils.prims as prim_utils
 from isaaclab.utils.assets import ISAAC_NUCLEUS_DIR
 
 
@@ -49,19 +50,29 @@ def design_scene():
     cfg_light_distant.func("/World/lightDistant", cfg_light_distant, translation=(1, 0, 10))
 
     # create a new xform prim for all objects to be spawned under
-    sim_utils.create_prim("/World/Objects", "Xform")
+    prim_utils.create_prim("/World/Objects", "Xform")
     # spawn a red cone
     cfg_cone = sim_utils.ConeCfg(
         radius=0.15,
         height=0.5,
         visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(1.0, 0.0, 0.0)),
     )
+
+    # my_test: deformable cone
+    cfg_cone_deformable = sim_utils.MeshConeCfg(
+        radius=0.15,
+        height=0.5,
+        deformable_props=sim_utils.DeformableBodyPropertiesCfg(),
+        visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(1.0, 0.0, 0.0)),
+        physics_material=sim_utils.DeformableBodyMaterialCfg(),
+    )
     cfg_cone.func("/World/Objects/Cone1", cfg_cone, translation=(-1.0, 1.0, 1.0))
-    cfg_cone.func("/World/Objects/Cone2", cfg_cone, translation=(-1.0, -1.0, 1.0))
+    cfg_cone_deformable.func("/World/Objects/Cone2", cfg_cone_deformable, translation=(-1.0, -1.0, 1.0), orientation=(0,1,0,0))
+    # cfg_cone.func("/World/Objects/Cone2", cfg_cone, translation=(-1.0, -1.0, 1.0))
 
     # spawn a green cone with colliders and rigid body
     cfg_cone_rigid = sim_utils.ConeCfg(
-        radius=0.15,
+        radius=0.5,
         height=0.5,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(),
         mass_props=sim_utils.MassPropertiesCfg(mass=1.0),
@@ -69,7 +80,7 @@ def design_scene():
         visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(0.0, 1.0, 0.0)),
     )
     cfg_cone_rigid.func(
-        "/World/Objects/ConeRigid", cfg_cone_rigid, translation=(-0.2, 0.0, 2.0), orientation=(0.5, 0.0, 0.5, 0.0)
+        "/World/Objects/ConeRigid", cfg_cone_rigid, translation=(-0.0, 0.0, 2.0), orientation=(0.5, 0.0, 0.5, 0.0)
     )
 
     # spawn a blue cuboid with deformable body
@@ -80,6 +91,8 @@ def design_scene():
         physics_material=sim_utils.DeformableBodyMaterialCfg(),
     )
     cfg_cuboid_deformable.func("/World/Objects/CuboidDeformable", cfg_cuboid_deformable, translation=(0.15, 0.0, 2.0))
+
+    print(f"ISAAC_NUCLEUS_DIR: {ISAAC_NUCLEUS_DIR}")
 
     # spawn a usd file of a table into the scene
     cfg = sim_utils.UsdFileCfg(usd_path=f"{ISAAC_NUCLEUS_DIR}/Props/Mounts/SeattleLabTable/table_instanceable.usd")

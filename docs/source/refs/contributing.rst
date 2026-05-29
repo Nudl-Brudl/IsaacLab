@@ -515,7 +515,9 @@ Tools
 We use the following tools for maintaining code quality:
 
 * `pre-commit <https://pre-commit.com/>`__: Runs a list of formatters and linters over the codebase.
-* `ruff <https://github.com/astral-sh/ruff/>`__: An extremely fast Python linter and formatter.
+* `black <https://black.readthedocs.io/en/stable/>`__: The uncompromising code formatter.
+* `flake8 <https://flake8.pycqa.org/en/latest/>`__: A wrapper around PyFlakes, pycodestyle and
+  McCabe complexity checker.
 
 Please check `here <https://pre-commit.com/#install>`__ for instructions
 to set these up. To run over the entire repository, please execute the

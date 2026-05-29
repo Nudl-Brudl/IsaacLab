@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -14,14 +14,13 @@ simulation_app = app_launcher.app
 
 """Rest everything follows."""
 
-import os
-
 import gymnasium as gym
-import pytest
+import os
 import torch
 
 import carb
 import omni.usd
+import pytest
 
 from isaaclab.envs import DirectMARLEnv, multi_agent_to_single_agent
 

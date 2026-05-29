@@ -1,4 +1,4 @@
-# Copyright (c) 2024-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2024-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: Apache-2.0
@@ -95,9 +95,10 @@ class RmpFlowGalbotLeftArmGripperCubeStackRelMimicEnvCfg(RmpFlowGalbotLeftArmCub
                 # Corresponding key for the binary indicator in "datagen_info" for completion
                 subtask_term_signal="grasp_2",
                 # Time offsets for data generation when splitting a trajectory
-                # This should be larger than the other subtasks, because the gripper
-                # should be lifted higher than two blocks
-                subtask_term_offset_range=(25, 30),
+                subtask_term_offset_range=(
+                    25,
+                    30,
+                ),  # this should be larger than the other subtasks, because the gripper should be lifted higher than 2 blocks
                 # Selection strategy for source subtask segment
                 selection_strategy="nearest_neighbor_object",
                 # Optional parameters for the selection strategy function

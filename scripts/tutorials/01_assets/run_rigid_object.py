@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -36,6 +36,7 @@ simulation_app = app_launcher.app
 import torch
 
 import isaaclab.sim as sim_utils
+import isaaclab.sim.utils.prims as prim_utils
 import isaaclab.utils.math as math_utils
 from isaaclab.assets import RigidObject, RigidObjectCfg
 from isaaclab.sim import SimulationContext
@@ -52,11 +53,12 @@ def design_scene():
 
     # Create separate groups called "Origin1", "Origin2", "Origin3"
     # Each group will have a robot in it
-    origins = [[0.25, 0.25, 0.0], [-0.25, 0.25, 0.0], [0.25, -0.25, 0.0], [-0.25, -0.25, 0.0]]
+    origins = [[0.25, 0.25, 0.0], [-0.25, 0.25, 0.0], [0.25, -0.25, 0.0], [-0.25, -0.25, 0.0], [-0.75, 0.25, 0.0]]
     for i, origin in enumerate(origins):
-        sim_utils.create_prim(f"/World/Origin{i}", "Xform", translation=origin)
+        prim_utils.create_prim(f"/World/Origin{i}", "Xform", translation=origin)
 
     # Rigid Object
+    # Creates as many cones as there are origins
     cone_cfg = RigidObjectCfg(
         prim_path="/World/Origin.*/Cone",
         spawn=sim_utils.ConeCfg(
@@ -94,7 +96,10 @@ def run_simulator(sim: sim_utils.SimulationContext, entities: dict[str, RigidObj
             sim_time = 0.0
             count = 0
             # reset root state
+            # has the dimension: 
+            # num_of_origins x (3_translational + 4_quaternions + 6_vel) = num_of_origins x 13
             root_state = cone_object.data.default_root_state.clone()
+            print(f"ROOT_STATE: {root_state}")
             # sample a random position on a cylinder around the origins
             root_state[:, :3] += origins
             root_state[:, :3] += math_utils.sample_cylinder(

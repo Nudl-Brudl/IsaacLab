@@ -54,8 +54,7 @@ To run a PhysX-trained policy with the Newton backend, use this command template
        --task=<TASK_ID> \
        --num_envs=32 \
        --checkpoint <PATH_TO_PHYSX_CHECKPOINT> \
-       --policy_transfer_file <PATH_TO_MAPPING_YAML> \
-       --visualizer newton
+       --policy_transfer_file <PATH_TO_MAPPING_YAML>
 
 Here are examples for different robots:
 
@@ -67,8 +66,8 @@ Here are examples for different robots:
        --task=Isaac-Velocity-Flat-G1-v0 \
        --num_envs=32 \
        --checkpoint <PATH_TO_PHYSX_CHECKPOINT> \
-       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_g1.yaml \
-       --visualizer newton
+       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_g1.yaml
+
 
 2. Unitree H1
 
@@ -79,8 +78,7 @@ Here are examples for different robots:
        --task=Isaac-Velocity-Flat-H1-v0 \
        --num_envs=32 \
        --checkpoint <PATH_TO_PHYSX_CHECKPOINT> \
-       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_h1.yaml \
-       --visualizer newton
+       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_h1.yaml
 
 
 3. Unitree Go2
@@ -91,8 +89,7 @@ Here are examples for different robots:
        --task=Isaac-Velocity-Flat-Go2-v0 \
        --num_envs=32 \
        --checkpoint <PATH_TO_PHYSX_CHECKPOINT> \
-       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_go2.yaml \
-       --visualizer newton
+       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_go2.yaml
 
 
 4. ANYmal-D
@@ -104,8 +101,7 @@ Here are examples for different robots:
        --task=Isaac-Velocity-Flat-Anymal-D-v0 \
        --num_envs=32 \
        --checkpoint <PATH_TO_PHYSX_CHECKPOINT> \
-       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_anymal_d.yaml \
-       --visualizer newton
+       --policy_transfer_file scripts/sim2sim_transfer/config/physx_to_newton_anymal_d.yaml
 
 Note that to run this, you need to checkout the Newton-based branch of IsaacLab such as ``feature/newton``.
 

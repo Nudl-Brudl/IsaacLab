@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -12,9 +12,8 @@ from __future__ import annotations
 import contextlib
 import logging
 import math
-from typing import Any
-
 import numpy as np
+from typing import Any
 
 # import logger
 logger = logging.getLogger(__name__)
@@ -163,6 +162,7 @@ class XrAnchorSynchronizer:
                 pxr_mat.SetRotateOnly(pxr_anchor_quat)
                 self.__last_anchor_quat = pxr_anchor_quat
             else:
+
                 if self.__last_anchor_quat is None:
                     self.__last_anchor_quat = pxr_anchor_quat
 

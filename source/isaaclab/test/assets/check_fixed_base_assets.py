@@ -1,4 +1,4 @@
-# Copyright (c) 2022-2026, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
@@ -36,6 +36,7 @@ import numpy as np
 import torch
 
 import isaaclab.sim as sim_utils
+import isaaclab.sim.utils.prims as prim_utils
 from isaaclab.assets import Articulation
 
 ##
@@ -73,12 +74,12 @@ def design_scene() -> tuple[dict, list[list[float]]]:
     origins = define_origins(num_origins=4, spacing=2.0)
 
     # Origin 1 with Franka Panda
-    sim_utils.create_prim("/World/Origin1", "Xform", translation=origins[0])
+    prim_utils.create_prim("/World/Origin1", "Xform", translation=origins[0])
     # -- Robot
     franka = Articulation(FRANKA_PANDA_CFG.replace(prim_path="/World/Origin1/Robot"))
 
     # Origin 2 with Anymal C
-    sim_utils.create_prim("/World/Origin2", "Xform", translation=origins[1])
+    prim_utils.create_prim("/World/Origin2", "Xform", translation=origins[1])
     # -- Robot
     robot_cfg = ANYMAL_C_CFG.replace(prim_path="/World/Origin2/Robot")
     robot_cfg.spawn.articulation_props.fix_root_link = True

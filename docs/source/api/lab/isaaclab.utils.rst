@@ -11,20 +11,14 @@
       array
       assets
       buffers
-      datasets
       dict
       interpolation
-      logger
       math
-      mesh
       modifiers
       noise
-      seed
-      sensors
       string
       timer
       types
-      version
       warp
 
    .. Rubric:: Functions
@@ -71,14 +65,6 @@ Buffer operations
    :inherited-members:
    :show-inheritance:
 
-Datasets operations
-~~~~~~~~~~~~~~~~~~~
-
-.. automodule:: isaaclab.utils.datasets
-   :members:
-   :show-inheritance:
-   :exclude-members: __init__, func
-
 Dictionary operations
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -95,27 +81,12 @@ Interpolation operations
    :inherited-members:
    :show-inheritance:
 
-Logger operations
-~~~~~~~~~~~~~~~~~
-
-.. automodule:: isaaclab.utils.logger
-   :members:
-   :show-inheritance:
-
 Math operations
 ~~~~~~~~~~~~~~~
 
 .. automodule:: isaaclab.utils.math
    :members:
    :inherited-members:
-   :show-inheritance:
-
-Mesh operations
-~~~~~~~~~~~~~~~
-
-.. automodule:: isaaclab.utils.mesh
-   :members:
-   :imported-members:
    :show-inheritance:
 
 Modifier operations
@@ -139,20 +110,6 @@ Noise operations
    :show-inheritance:
    :exclude-members: __init__, func
 
-Seed operations
-~~~~~~~~~~~~~~~
-
-.. automodule:: isaaclab.utils.seed
-   :members:
-   :show-inheritance:
-
-Sensor operations
-~~~~~~~~~~~~~~~~~
-
-.. automodule:: isaaclab.utils.sensors
-   :members:
-   :show-inheritance:
-
 String operations
 ~~~~~~~~~~~~~~~~~
 
@@ -171,13 +128,6 @@ Type operations
 ~~~~~~~~~~~~~~~
 
 .. automodule:: isaaclab.utils.types
-   :members:
-   :show-inheritance:
-
-Version operations
-~~~~~~~~~~~~~~~~~~
-
-.. automodule:: isaaclab.utils.version
    :members:
    :show-inheritance:
 
