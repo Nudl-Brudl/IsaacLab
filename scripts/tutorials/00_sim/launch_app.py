@@ -61,9 +61,12 @@ def design_scene():
     cfg_cuboid = sim_utils.CuboidCfg(
         size=[args_cli.size] * 3,
         visual_material=sim_utils.PreviewSurfaceCfg(diffuse_color=(1.0, 1.0, 1.0)),
+        rigid_props=sim_utils.RigidBodyPropertiesCfg(),
+        mass_props=sim_utils.MassPropertiesCfg(mass=1.0),
+        collision_props=sim_utils.CollisionPropertiesCfg(),
     )
     # Spawn cuboid, altering translation on the z-axis to scale to its size
-    cfg_cuboid.func("/World/Object", cfg_cuboid, translation=(0.0, 0.0, args_cli.size / 2))
+    cfg_cuboid.func("/World/Object", cfg_cuboid, translation=(0.0, 0.0, 15))
 
 
 def main():
@@ -73,7 +76,7 @@ def main():
     sim_cfg = sim_utils.SimulationCfg(dt=0.01, device=args_cli.device)
     sim = sim_utils.SimulationContext(sim_cfg)
     # Set main camera
-    sim.set_camera_view([2.0, 0.0, 2.5], [-0.5, 0.0, 0.5])
+    sim.set_camera_view([7.0, 0.0, 20], [-0.5, 0.0, 0.5])
 
     # Design scene by adding assets to it
     design_scene()

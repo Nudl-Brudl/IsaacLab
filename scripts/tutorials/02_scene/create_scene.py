@@ -44,8 +44,14 @@ from isaaclab.utils import configclass
 ##
 # Pre-defined configs
 ##
-from isaaclab_assets import CARTPOLE_CFG  # isort:skip
+from isaaclab_assets import CARTPOLE_CFG, ABLE_CFG  # isort:skip
 
+"""Here, everything is like in scripts/tutorials/01_assets/run_articulation.py
+
+Only that there is a definition of an InteractiveScene that makes spawning the 
+different things a bit easier. 
+The run_simulation part is still the same.
+"""
 
 @configclass
 class CartpoleSceneCfg(InteractiveSceneCfg):
@@ -60,7 +66,7 @@ class CartpoleSceneCfg(InteractiveSceneCfg):
     )
 
     # articulation
-    cartpole: ArticulationCfg = CARTPOLE_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+    cartpole: ArticulationCfg = ABLE_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
 
 
 def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):

@@ -19,6 +19,8 @@ import argparse
 
 from isaaclab.app import AppLauncher
 
+print("[INFO]: Launch Simulator...")
+
 # add argparse arguments
 parser = argparse.ArgumentParser(description="This script demonstrates different single-arm manipulators.")
 # append AppLauncher cli args
@@ -29,6 +31,9 @@ args_cli = parser.parse_args()
 # launch omniverse app
 app_launcher = AppLauncher(args_cli)
 simulation_app = app_launcher.app
+
+print("[INFO]: Simulator launched.")
+
 
 """Rest everything follows."""
 
@@ -208,15 +213,20 @@ def run_simulator(sim: sim_utils.SimulationContext, entities: dict[str, Articula
 
 def main():
     """Main function."""
+    print("[INFO]: Initialize Simulation Context...")
     # Initialize the simulation context
     sim_cfg = sim_utils.SimulationCfg(device=args_cli.device)
     sim = sim_utils.SimulationContext(sim_cfg)
+    print("[INFO]: Simulation Context initialized.")
+
     # Set main camera
     sim.set_camera_view([3.5, 0.0, 3.2], [0.0, 0.0, 0.5])
     # design scene
+    print("[INFO]: Design Scene...")
     scene_entities, scene_origins = design_scene()
     scene_origins = torch.tensor(scene_origins, device=sim.device)
     # Play the simulator
+    print("[INFO]: Scene designed.")
     sim.reset()
     # Now we are ready!
     print("[INFO]: Setup complete...")

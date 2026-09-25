@@ -7,6 +7,7 @@
 # Configuration for different assets.
 ##
 
+from .able import *
 from .agibot import *
 from .agility import *
 from .allegro import *
